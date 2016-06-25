@@ -3,10 +3,47 @@ class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      currentVideo: exampleVideoData[0],
-      videos: exampleVideoData
+      videos: [],
+      currentVideo: {
+        id: {
+          videoId: ''
+        },
+        snippet: {
+          title: '',
+          description: ''
+        }
+      },
+      search: searchYouTube
     }
+
   }
+
+  componentDidMount(){
+
+    console.log("component mount key " + window.YOUTUBE_API_KEY);
+    var options = {
+      max: 5,
+      key: window.YOUTUBE_API_KEY,
+      query:'react'
+    }
+
+    this.state.search(options, function(videos){
+      this.setState({
+        currentVideo: videos[0],
+        videos: videos
+      });
+    }.bind(this))
+
+    // console.log("starting to execute componentDidMount");
+    // this.state.search({max:5, key:window.YOUTUBE_API_KEY, query:'react'}, function(data){
+    //     this.setState({
+    //       currentVideo:data[0],
+    //       videos: data
+    //     })
+    //   }
+    // );
+  }
+
 
   onListItemClick(arg){
     this.setState({
@@ -30,6 +67,8 @@ class App extends React.Component{
       </div>
     );
   }
+
+
 }
 
 
