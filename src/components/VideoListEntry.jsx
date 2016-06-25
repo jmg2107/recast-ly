@@ -1,5 +1,11 @@
 var VideoListEntry = (props) => {
 
+    var clicked = function(arg){
+      props.itemClick(arg);
+   // this.render();
+      console.log("Clicked function arg: " + arg);
+    };
+
     return (
 
       <div className="video-list-entry" src={props.video}>
@@ -7,7 +13,7 @@ var VideoListEntry = (props) => {
           <img className="media-object" src={props.video.snippet.thumbnails.default.url} alt="" />
         </div>
         <div className="media-body">
-          <div className="video-list-entry-title" src={props.video.snippet.title}>{props.video.snippet.title}</div>
+          <div className="video-list-entry-title" onClick={clicked.bind(this, props.video)} src={props.video.snippet.title}>{props.video.snippet.title}</div>
           <div className="video-list-entry-detail" src={props.video.snippet.description}>{props.video.snippet.description}</div>
         </div>
       </div>

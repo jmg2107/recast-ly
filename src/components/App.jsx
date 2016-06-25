@@ -3,30 +3,29 @@ class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      video: exampleVideoData[0],
+      currentVideo: exampleVideoData[0],
       videos: exampleVideoData
     }
   }
 
-  onListItemClick(){
+  onListItemClick(arg){
     this.setState({
-      video: this.video
+      currentVideo: arg
     });
-    this.render();
-    console.log(this);
+   // this.render();
+    console.log(arg);
   }
 
   render(){
-
     return(
 
        <div>
         <Nav />
         <div className="col-md-7">
-          <VideoPlayer video={this.state.video} onClick={this.onListItemClick.bind(this)}/>
+          <VideoPlayer video={this.state.currentVideo}/>
         </div>
         <div className="col-md-5">
-          <VideoList videos={this.state.videos} onClick={this.onListItemClick.bind(this)}/>
+          <VideoList videos={this.state.videos} listClick={this.onListItemClick.bind(this)}/>
         </div>
       </div>
     );
