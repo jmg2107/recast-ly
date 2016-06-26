@@ -15,33 +15,13 @@ class App extends React.Component{
       },
       search: searchYouTube
     }
-
   }
 
   componentDidMount(){
 
     console.log("component mount key " + window.YOUTUBE_API_KEY);
-    var options = {
-      max: 5,
-      key: window.YOUTUBE_API_KEY,
-      query:'react'
-    }
+    this.doSearch('rabbits');
 
-    this.state.search(options, function(videos){
-      this.setState({
-        currentVideo: videos[0],
-        videos: videos
-      });
-    }.bind(this))
-
-    // console.log("starting to execute componentDidMount");
-    // this.state.search({max:5, key:window.YOUTUBE_API_KEY, query:'react'}, function(data){
-    //     this.setState({
-    //       currentVideo:data[0],
-    //       videos: data
-    //     })
-    //   }
-    // );
   }
 
 
@@ -49,15 +29,35 @@ class App extends React.Component{
     this.setState({
       currentVideo: arg
     });
-   // this.render();
     console.log(arg);
+  }
+
+  updateVid(query){
+    _.debounce(this.doSearch(query), 500);
+  }
+
+  doSearch(arg){
+
+    var options = {
+      max: 5,
+      key: window.YOUTUBE_API_KEY,
+      query: arg
+    }
+
+    this.state.search(options, function(videos){
+      this.setState({
+        currentVideo: videos[0],
+        videos: videos
+      });
+    }.bind(this));
+
   }
 
   render(){
     return(
 
        <div>
-        <Nav />
+        <Nav textSearch={this.updateVid.bind(this)}/>
         <div className="col-md-7">
           <VideoPlayer video={this.state.currentVideo}/>
         </div>
